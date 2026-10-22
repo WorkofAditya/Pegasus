@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Pegasus Body -->
+    <path
+        android:fillColor="#1A237E"
+        android:pathData="M54,18 C40,18 28,30 28,44 C28,58 40,70 54,70 C68,70 80,58 80,44 C80,30 68,18 54,18 Z M54,26 C64,26 72,34 72,44 C72,54 64,62 54,62 C44,62 36,54 36,44 C36,34 44,26 54,26 Z" />
+    <!-- Pegasus Wing -->
+    <path
+        android:fillColor="#283593"
+        android:pathData="M45,45 L30,35 L25,45 L35,50 Z M48,52 L33,42 L28,52 L38,57 Z" />
+    <!-- Pegasus Eye -->
+    <path
+        android:fillColor="#00BCD4"
+        android:pathData="M58,40 m-2,0 a2,2 0 1,1 4,0 a2,2 0 1,1 -4,0" />
+    <!-- Pegasus Hoof -->
+    <path
+        android:fillColor="#1A237E"
+        android:pathData="M48,68 L52,68 L54,78 L46,78 Z" />
+</vector>

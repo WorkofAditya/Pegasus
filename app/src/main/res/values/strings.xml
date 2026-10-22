@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Pegasus</string>
+    <string name="device_admin_description">Enables Pegasus to perform advanced device management operations including screen lock, password policies, and security controls.</string>
+    <string name="service_notification_title">Pegasus</string>
+    <string name="service_notification_text">Operating in background</string>
+    <string name="channel_name">Pegasus Service</string>
+    <string name="channel_description">Pegasus core operations channel</string>
+</resources>

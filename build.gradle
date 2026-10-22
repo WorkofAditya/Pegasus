@@ -1,0 +1,21 @@
+// Top-level build file
+plugins {
+    id 'com.android.application' version '8.13.2' apply false
+    id 'com.android.library' version '8.13.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+}
+
+ext {
+    minSdk = 24
+    compileSdk = 34
+    targetSdk = 34
+    kotlin_version = '1.9.22'
+    coroutines_version = '1.7.3'
+    okhttp_version = '4.12.0'
+    gson_version = '2.10.1'
+    compose_bom_version = '2024.01.00'
+}
+
+task clean(type: Delete) {
+    delete rootProject.layout.buildDirectory
+}
