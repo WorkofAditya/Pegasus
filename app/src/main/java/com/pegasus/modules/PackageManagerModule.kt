@@ -22,7 +22,7 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
             "install" -> installPackage(apkUri)
             "uninstall" -> uninstallPackage(packageName)
             "launch" -> launchPackage(packageName)
-            "force_stop" -> forceStopPackage(packageName)
+            "force_stop" -> JSONObject().put("error", "Android does not allow ordinary apps to force-stop other packages")
             else -> JSONObject().put("error", "Unknown package action")
         }
     }
@@ -36,7 +36,7 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
                 put("package_name", pkg.packageName)
                 put("version_name", pkg.versionName)
                 put("version_code", pkg.longVersionCode)
-                put("system_app", (pkg.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM != 0)
+                put("system_app", ((pkg.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM) != 0)
             })
         }
         return JSONObject().put("packages", apps)
@@ -44,8 +44,7 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
 
     private fun getPackageInfo(packageName: String): JSONObject {
         return try {
-            val pm = context.packageManager
-            val info = pm.getPackageInfo(packageName, 0)
+            val info = context.packageManager.getPackageInfo(packageName, 0)
             JSONObject().apply {
                 put("package_name", info.packageName)
                 put("version_name", info.versionName)
@@ -64,12 +63,11 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(uri, "application/vnd.android.package-archive")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
             }
             context.startActivity(intent)
-            JSONObject().put("success", true).put("message", "Install intent launched")
+            JSONObject().put("success", true).put("message", "Install confirmation opened")
         } catch (e: Exception) {
-            JSONObject().put("error", e.message)
+            JSONObject().put("error", e.message ?: "Unable to open installer")
         }
     }
 
@@ -80,9 +78,9 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent)
-            JSONObject().put("success", true).put("message", "Uninstall intent launched")
+            JSONObject().put("success", true).put("message", "Uninstall confirmation opened")
         } catch (e: Exception) {
-            JSONObject().put("error", e.message)
+            JSONObject().put("error", e.message ?: "Unable to open uninstaller")
         }
     }
 
@@ -97,17 +95,7 @@ class PackageManagerModule(private val context: Context) : PegasusModule {
                 JSONObject().put("error", "No launch intent found")
             }
         } catch (e: Exception) {
-            JSONObject().put("error", e.message)
-        }
-    }
-
-    private fun forceStopPackage(packageName: String): JSONObject {
-        return try {
-            val am = context.getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
-            am.forceStopPackage(packageName)
-            JSONObject().put("success", true)
-        } catch (e: Exception) {
-            JSONObject().put("error", e.message)
+            JSONObject().put("error", e.message ?: "Unable to launch app")
         }
     }
 }
