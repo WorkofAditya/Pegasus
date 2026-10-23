@@ -125,6 +125,9 @@ def parse_payload() -> tuple[str | None, dict[str, Any] | None]:
     allowed = ("device_model", "android_version", "app_version", "battery_level",
                "battery_plugged", "network_type", "wifi_ssid", "device_manufacturer")
     clean = {key: payload[key] for key in allowed if key in payload}
+    # Older Android clients send the OS release in app_version instead.
+    if "android_version" not in clean and "app_version" in clean:
+        clean["android_version"] = clean["app_version"]
     return device_id.strip(), clean
 
 
